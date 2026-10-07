@@ -149,6 +149,28 @@ subcommand.
 Display statistics regarding the number, size
 .Pq logical, physical and allocated
 and deduplication of blocks.
+.Pp
+If specified multiple times, provides greater and greater verbosity:
+.Pp
+.Bl -tag -compact -width "6"
+.It Sy 2
+also display a histogram of block sizes
+.Pq by psize, lsize, and asize
+across the whole pool.
+.It Sy 3
+also break the block-statistics table down per indirection level, and show
+the number of ganged blocks when present.
+.It Sy 4
+also display a per-object-type histogram of physical block sizes
+.Pq in 512-byte sectors .
+.It Sy 5
+also print every block pointer as it is scanned, instead of a periodic
+progress indicator.
+.It Sy 6
+also print block pointers in their full, uncompacted form wherever
+.Nm
+would otherwise use an abbreviated one-line representation.
+.El
 .It Fl -bin Ns = Ns ( Li lsize Ns | Ns Li psize Ns | Ns Li asize )
 When used with
 .Fl bb ,
