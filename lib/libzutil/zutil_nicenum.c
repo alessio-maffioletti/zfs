@@ -55,19 +55,22 @@ zfs_nicenum_format(uint64_t num, char *buf, size_t buflen,
 	uint64_t n = num;
 	int index = 0;
 	const char *u;
-	const char *units[3][7] = {
+	const char *units[4][7] = {
 	    [ZFS_NICENUM_1024] = {"", "K", "M", "G", "T", "P", "E"},
 	    [ZFS_NICENUM_BYTES] = {"B", "K", "M", "G", "T", "P", "E"},
-	    [ZFS_NICENUM_TIME] = {"ns", "us", "ms", "s", "?", "?", "?"}
+	    [ZFS_NICENUM_TIME] = {"ns", "us", "ms", "s", "?", "?", "?"},
+	    [ZFS_NICENUM_1000] = {"", "k", "M", "G", "T", "P", "E"}
 	};
 
 	const int units_len[] = {[ZFS_NICENUM_1024] = 6,
 	    [ZFS_NICENUM_BYTES] = 6,
-	    [ZFS_NICENUM_TIME] = 4};
+	    [ZFS_NICENUM_TIME] = 4,
+	    [ZFS_NICENUM_1000] = 6};
 
 	const int k_unit[] = {	[ZFS_NICENUM_1024] = 1024,
 	    [ZFS_NICENUM_BYTES] = 1024,
-	    [ZFS_NICENUM_TIME] = 1000};
+	    [ZFS_NICENUM_TIME] = 1000,
+	    [ZFS_NICENUM_1000] = 1000};
 
 	double val;
 
@@ -144,6 +147,14 @@ void
 zfs_nicenum(uint64_t num, char *buf, size_t buflen)
 {
 	zfs_nicenum_format(num, buf, buflen, ZFS_NICENUM_1024);
+}
+/*
+ * Convert a count to an appropriately human-readable output.
+ */
+void
+zfs_nicecount(uint64_t num, char *buf, size_t buflen)
+{
+	zfs_nicenum_format(num, buf, buflen, ZFS_NICENUM_1000);
 }
 
 /*

@@ -983,6 +983,15 @@ zdb_nicenum(uint64_t num, char *buf, size_t buflen)
 }
 
 static void
+zdb_nicecount(uint64_t num, char *buf, size_t buflen)
+{
+	if (dump_opt['P'])
+		(void) snprintf(buf, buflen, "%llu", (longlong_t)num);
+	else
+		nicecount(num, buf, buflen);
+}
+
+static void
 zdb_nicebytes(uint64_t bytes, char *buf, size_t buflen)
 {
 	if (dump_opt['P'])
@@ -6485,7 +6494,7 @@ dump_size_histograms(zdb_cb_t *zcb)
 		for (int j = 0; j < NUM_HISTO; j++) {
 			parm_histo[j].cumulative += parm_histo[j].len[i];
 
-			zdb_nicenum(parm_histo[j].count[i],
+			zdb_nicecount(parm_histo[j].count[i],
 			    numbuf, sizeof (numbuf));
 			if (dump_opt['P'])
 				(void) printf("\t%s", numbuf);

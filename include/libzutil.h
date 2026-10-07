@@ -133,6 +133,7 @@ _LIBZUTIL_H boolean_t zfs_isnumber(const char *);
  * ZFS_NICENUM_1024:	Print kilo, mega, tera, peta, exa..
  * ZFS_NICENUM_BYTES:	Print single bytes ("13B"), kilo, mega, tera...
  * ZFS_NICENUM_TIME:	Print nanosecs, microsecs, millisecs, seconds...
+ * ZFS_NICENUM_1000:	Print decimal (SI) kilo, mega, tera, peta, exa..
  * ZFS_NICENUM_RAW:	Print the raw number without any formatting
  * ZFS_NICENUM_RAWTIME:	Same as RAW, but print dashes ('-') for zero.
  */
@@ -140,8 +141,9 @@ enum zfs_nicenum_format {
 	ZFS_NICENUM_1024 = 0,
 	ZFS_NICENUM_BYTES = 1,
 	ZFS_NICENUM_TIME = 2,
-	ZFS_NICENUM_RAW = 3,
-	ZFS_NICENUM_RAWTIME = 4
+	ZFS_NICENUM_1000 = 3,
+	ZFS_NICENUM_RAW = 4,
+	ZFS_NICENUM_RAWTIME = 5
 };
 
 /*
@@ -149,12 +151,14 @@ enum zfs_nicenum_format {
  */
 _LIBZUTIL_H void zfs_nicebytes(uint64_t, char *, size_t);
 _LIBZUTIL_H void zfs_nicenum(uint64_t, char *, size_t);
+_LIBZUTIL_H void zfs_nicecount(uint64_t, char *, size_t);
 _LIBZUTIL_H void zfs_nicenum_format(uint64_t, char *, size_t,
     enum zfs_nicenum_format);
 _LIBZUTIL_H void zfs_nicetime(uint64_t, char *, size_t);
 _LIBZUTIL_H void zfs_niceraw(uint64_t, char *, size_t);
 
 #define	nicenum(num, buf, size)	zfs_nicenum(num, buf, size)
+#define	nicecount(num, buf, size)	zfs_nicecount(num, buf, size)
 #define	NN_NUMBUF_SZ	(6)
 
 _LIBZUTIL_H void zpool_dump_ddt(const ddt_stat_t *, const ddt_histogram_t *,
